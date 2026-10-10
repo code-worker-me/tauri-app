@@ -1,7 +1,7 @@
+use rusqlite::{params, Connection};
 use std::fs;
 use std::path::PathBuf;
 use std::sync::Mutex;
-use rusqlite::Connection;
 use tauri::{AppHandle, Manager};
 
 pub struct AppState {
@@ -31,6 +31,17 @@ impl AppState {
                 username TEXT UNIQUE NOT NULL,
                 password_hash TEXT NOT NULL
             )",
+            [],
+        )?;
+
+        // tabel produc
+        conn.execute(
+            "CREATE TABLE IF NOT EXISTS products (
+                id TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
+                price REAL NOT NULL,
+                stock INTEGER NOT NULL DEFAULT 0
+        )",
             [],
         )?;
 
