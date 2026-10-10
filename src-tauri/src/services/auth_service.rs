@@ -13,7 +13,7 @@ pub fn register_user(
         return Err("Username dan password tidak boleh kosong.".to_string());
     }
 
-    let conn = state.db.lock().map_err(|_| "Gagal mengakses database.".to_string())?;
+    let conn = state.db.get().map_err(|_| "Gagal mengakses database.".to_string())?;
 
     // Cek apakah username sudah ada
     let exists: bool = conn
@@ -49,7 +49,7 @@ pub fn login_user(
     state: &State<AppState>,
     payload: LoginPayload,
 ) -> Result<AuthResponse, String> {
-    let conn = state.db.lock().map_err(|_| "Gagal mengakses database.".to_string())?;
+    let conn = state.db.get().map_err(|_| "Gagal mengakses database.".to_string())?;
 
     let user = conn
         .query_row(
@@ -102,7 +102,7 @@ pub fn get_active_session(state: &State<AppState>) -> Result<Option<AuthResponse
         None => return Ok(None),
     };
 
-    let conn = state.db.lock().map_err(|_| "Gagal mengakses database.".to_string())?;
+    let conn = state.db.get().map_err(|_| "Gagal mengakses database.".to_string())?;
 
     let user = conn
         .query_row(

@@ -1,11 +1,13 @@
-use rusqlite::{params, Connection};
+use r2d2::Pool;
+use r2d2_sqlite::SqliteConnectionManager;
+use rusqlite::Connection;
 use std::fs;
 use std::path::PathBuf;
 use std::sync::Mutex;
 use tauri::{AppHandle, Manager};
 
 pub struct AppState {
-    pub db: Mutex<Connection>,
+    pub db: Pool<SqliteConnectionManager>,
     pub current_session_user_id: Mutex<Option<String>>,
 }
 
@@ -22,31 +24,27 @@ impl AppState {
         }
 
         let db_path = app_dir.join("app_data.db");
-        let conn = Connection::open(db_path)?;
+        let manager = SqliteConnectionManager::file(db_path);
+        let pool = Pool::new(manager)?;
+        let conn = pool.get()?;
 
-        // Inisialisasi tabel users jika belum ada
-        conn.execute(
+        // Inisialisasi tabel users dan products jika belum ada
+        conn.execute_batch(
             "CREATE TABLE IF NOT EXISTS users (
                 id TEXT PRIMARY KEY,
                 username TEXT UNIQUE NOT NULL,
                 password_hash TEXT NOT NULL
-            )",
-            [],
-        )?;
-
-        // tabel produc
-        conn.execute(
-            "CREATE TABLE IF NOT EXISTS products (
+            );
+            CREATE TABLE IF NOT EXISTS products (
                 id TEXT PRIMARY KEY,
                 name TEXT NOT NULL,
                 price REAL NOT NULL,
                 stock INTEGER NOT NULL DEFAULT 0
-        )",
-            [],
+            );",
         )?;
 
         Ok(Self {
-            db: Mutex::new(conn),
+            db: pool,
             current_session_user_id: Mutex::new(None),
         })
     }
