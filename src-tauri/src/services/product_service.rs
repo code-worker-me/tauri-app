@@ -1,6 +1,5 @@
 use crate::models::product::{Product, ProductPayload};
 use crate::storage::db::AppState;
-use r2d2_sqlite::SqliteConnectionManager;
 use rusqlite::params;
 use tauri::State;
 
