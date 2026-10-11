@@ -1,53 +1,10 @@
 <template>
   <div class="w-full max-w-lg bg-white rounded-2xl shadow-sm border border-gray-200/80 p-5 sm:p-6 space-y-4">
-    <!-- Header: Logo & User Info -->
-    <div class="flex items-center justify-between pb-2 border-b border-gray-100">
-      <MapLogo />
-      <div class="text-right">
-        <div class="text-sm font-black text-gray-800 uppercase tracking-tight">
-          {{ auth.user?.username || 'PANGKALAN' }}
-        </div>
-        <div class="text-xs text-gray-500 font-medium">
-          Merchant Pertamina
-        </div>
-      </div>
-    </div>
 
     <!-- Hero Card: Banner Stok & Harga (Sesuai Referensi) -->
     <div class="relative overflow-hidden bg-linear-to-r from-[#3e561c] to-[#4c6a23] text-white rounded-2xl p-4 shadow-md flex items-center justify-between">
-      <!-- Background subtle overlay decoration -->
-      <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-white/5 rounded-full pointer-events-none"></div>
-
-      <!-- Left Stat: Stok -->
-      <div class="flex items-center gap-3 z-10">
-        <div class="w-10 h-10 rounded-xl bg-[#587a28] border border-white/20 flex items-center justify-center shrink-0 shadow-inner">
-          <svg class="w-6 h-6 text-yellow-300" viewBox="0 0 24 24" fill="currentColor">
-            <!-- Cylinder icon -->
-            <path d="M12 2C8.686 2 6 3.343 6 5v14c0 1.657 2.686 3 6 3s6-1.343 6-3V5c0-1.657-2.686-3-6-3zm0 2c2.761 0 4 1.01 4 1.5S14.761 7 12 7 8 5.99 8 5.5 9.239 4 12 4z"/>
-          </svg>
-        </div>
-        <div>
-          <div class="text-[11px] font-medium text-green-200/90 leading-tight">Stok</div>
-          <div class="text-lg font-extrabold tracking-tight text-white leading-tight mt-0.5">
-            {{ totalStock }} Tabung
-          </div>
-        </div>
-      </div>
-
-      <!-- Right Stat: Harga LPG -->
-      <div class="flex items-center gap-3 z-10 text-right">
-        <div class="w-10 h-10 rounded-xl bg-[#587a28] border border-white/20 flex items-center justify-center shrink-0 shadow-inner order-last">
-          <svg class="w-6 h-6 text-yellow-300" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 14.5h-2v-1h-1a1 1 0 01-1-1v-3a1 1 0 011-1h3v-1H9V9h2V8h2v1h1a1 1 0 011 1v3a1 1 0 01-1 1h-3v1h4v1.5z"/>
-          </svg>
-        </div>
-        <div>
-          <div class="text-[11px] font-medium text-green-200/90 leading-tight">Harga LPG 3 Kg</div>
-          <div class="text-lg font-extrabold tracking-tight text-white leading-tight mt-0.5">
-            {{ mainPriceFormatted }}
-          </div>
-        </div>
-      </div>
+      <h1 class="text-white text-xl font-bold">Dashboard</h1>
+      <p class="font-light text-[16px]">Warung Ibu Herni</p>
     </div>
 
     <!-- Menu List (Sesuai Desain Referensi) -->
@@ -72,28 +29,8 @@
         </div>
       </div>
 
-      <!-- 2. Daftarkan Pelanggan -->
-      <div
-        @click="toast.info('Fitur Daftarkan Pelanggan siap dikembangkan.')"
-        class="group flex items-center justify-between p-3.5 rounded-xl border border-[#b3ce98] bg-linear-to-r from-[#f8faf4] to-white hover:border-[#547926] hover:shadow-sm cursor-pointer transition duration-150"
-      >
-        <div class="flex items-center gap-3.5">
-          <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200/60 flex items-center justify-center text-xl shrink-0">
-            📋
-          </div>
-          <span class="text-sm font-bold text-gray-800 group-hover:text-[#547926] transition">
-            Daftarkan Pelanggan
-          </span>
-        </div>
-        <div class="w-6 h-6 rounded-md bg-[#547926] text-white flex items-center justify-center shadow-xs">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
-          </svg>
-        </div>
-      </div>
-
       <!-- 3. Laporan Penjualan -->
-      <div
+      <!-- <div
         @click="toast.info('Fitur Laporan Penjualan siap dikembangkan.')"
         class="group flex items-center justify-between p-3.5 rounded-xl border border-[#b3ce98] bg-linear-to-r from-[#f8faf4] to-white hover:border-[#547926] hover:shadow-sm cursor-pointer transition duration-150"
       >
@@ -110,36 +47,19 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
           </svg>
         </div>
-      </div>
+      </div> -->
 
       <!-- 4. Atur Stok & Harga (Navigasi ke Halaman Produk CRUD) -->
-      <div
+      <MenuCard
         id="btn-goto-products"
+        title="Atur Stok & Harga"
+        subtitle="Kelola stok dan harga tabung gas"
+        icon="⚙️"
         @click="$router.push('/products')"
-        class="group flex items-center justify-between p-3.5 rounded-xl border-2 border-[#547926]/60 bg-linear-to-r from-[#eef6e4] to-white hover:border-[#547926] hover:shadow-md cursor-pointer transition duration-150"
-      >
-        <div class="flex items-center gap-3.5">
-          <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-xl shrink-0">
-            ⚙️
-          </div>
-          <div>
-            <span class="text-sm font-bold text-gray-900 group-hover:text-[#547926] transition block">
-              Atur Stok & Harga
-            </span>
-            <span class="text-[11px] text-[#547926] font-medium">
-              Kelola stok dan harga tabung gas
-            </span>
-          </div>
-        </div>
-        <div class="w-6 h-6 rounded-md bg-[#547926] text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
-          </svg>
-        </div>
-      </div>
+      />
 
       <!-- 5. Hak Data Pelanggan (dengan Badge Merah 'Baru') -->
-      <div
+      <!-- <div
         @click="toast.info('Informasi Hak Perlindungan Data Pelanggan.')"
         class="group flex items-center justify-between p-3.5 rounded-xl border border-[#b3ce98] bg-linear-to-r from-[#f8faf4] to-white hover:border-[#547926] hover:shadow-sm cursor-pointer transition duration-150"
       >
@@ -161,10 +81,10 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
           </svg>
         </div>
-      </div>
+      </div> -->
 
       <!-- 6. Profil Saya -->
-      <div
+      <!-- <div
         @click="toast.info(`Profil Merchant: ${auth.user?.username || 'Pangkalan Pertamina'}`)"
         class="group flex items-center justify-between p-3.5 rounded-xl border border-[#b3ce98] bg-linear-to-r from-[#f8faf4] to-white hover:border-[#547926] hover:shadow-sm cursor-pointer transition duration-150"
       >
@@ -181,7 +101,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
           </svg>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <!-- Logout Action Footer -->
@@ -206,7 +126,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
-import MapLogo from "../components/MapLogo.vue";
+import MenuCard from "../components/MenuCard.vue";
 import { useAuthStore } from "../stores/auth.store.js";
 import { tauriAuthService } from "../services/tauriAuth.js";
 import { getAllProducts } from "../services/product.service.js";
@@ -217,20 +137,6 @@ const auth = useAuthStore();
 const toast = useToast();
 
 const products = ref([]);
-const totalStock = computed(() => {
-  if (!products.value.length) return "68";
-  return products.value.reduce((sum, p) => sum + (Number(p.stock) || 0), 0);
-});
-
-const mainPriceFormatted = computed(() => {
-  if (!products.value.length) return "Rp19.000";
-  const first = products.value[0];
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  }).format(first.price || 19000);
-});
 
 onMounted(async () => {
   try {

@@ -1,26 +1,10 @@
 <template>
   <div class="w-full max-w-lg bg-white rounded-2xl shadow-sm border border-gray-200/80 p-6 sm:p-8">
-    <!-- Header: Logo & Bantuan -->
-    <div class="flex items-center justify-between mb-6">
-      <MapLogo />
-      <button
-        type="button"
-        @click="handleHelp"
-        class="text-[#d82d2d] hover:text-[#b01e1e] font-semibold text-sm flex items-center gap-1 transition"
-      >
-        <span>Bantuan</span>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="9" stroke-width="2" />
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17h.01M12 14a2 2 0 10-2-2" />
-        </svg>
-      </button>
-    </div>
-
     <!-- Title & Description -->
     <div class="mb-6">
       <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Selamat Datang</h1>
       <p class="text-sm text-gray-500 mt-1 leading-normal">
-        Masuk Merchant Apps Pertamina (MAP) menggunakan nomor ponsel atau email.
+        Masuk ke sistem <i>Point of Sales</i> warung Suherni menggunakan nomor ponsel atau email.
       </p>
     </div>
 
@@ -97,25 +81,12 @@
         <span>{{ isLoading ? 'Memproses...' : 'MASUK' }}</span>
       </button>
     </form>
-
-    <!-- Register Footer Link -->
-    <div class="mt-6 text-center text-sm text-gray-600 border-t border-gray-100 pt-5">
-      Belum punya akun?
-      <button
-        type="button"
-        @click="$router.push('/register')"
-        class="text-[#547926] font-bold hover:underline ml-1 cursor-pointer"
-      >
-        Daftar sekarang
-      </button>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import MapLogo from "../components/MapLogo.vue";
 import { tauriAuthService } from "../services/tauriAuth.js";
 import { useAuthStore } from "../stores/auth.store.js";
 import { useToast } from "../composables/useToast.js";
@@ -128,10 +99,6 @@ const username = ref("");
 const password = ref("");
 const showPassword = ref(false);
 const isLoading = ref(false);
-
-function handleHelp() {
-  toast.info("Pusat Bantuan Pertamina Call Center 135");
-}
 
 async function handleLogin() {
   isLoading.value = true;
