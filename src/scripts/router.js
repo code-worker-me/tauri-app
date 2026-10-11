@@ -2,6 +2,7 @@ import { authState } from "./state/authState.js";
 import { renderLoginView } from "./views/login.view.js";
 import { renderRegisterView } from "./views/register.view.js";
 import { renderDashboardView } from "./views/dashboard.view.js";
+import { renderProductsView } from "./views/products.view.js";
 
 class Router {
   constructor() {
@@ -17,7 +18,7 @@ class Router {
     if (!this.container) return;
 
     // Route protection guard
-    if (route === "dashboard" && !authState.checkAuth()) {
+    if ((route === "dashboard" || route === "products") && !authState.checkAuth()) {
       route = "login";
     } else if ((route === "login" || route === "register") && authState.checkAuth()) {
       route = "dashboard";
@@ -32,6 +33,9 @@ class Router {
         break;
       case "dashboard":
         renderDashboardView(this.container);
+        break;
+      case "products":                          // ← tambah
+        renderProductsView(this.container);     // ← tambah
         break;
       case "login":
       default:

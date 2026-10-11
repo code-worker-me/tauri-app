@@ -1,18 +1,22 @@
-const { invoke } = window.__TAURI__.core;
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import App from "./App.vue";
+import router from "./router/index.js";
+import { useAuthStore } from "./stores/auth.store.js";
 
-let greetInputEl;
-let greetMsgEl;
+const app = createApp(App);
+const pinia = createPinia();
 
-async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsgEl.textContent = await invoke("greet", { name: greetInputEl.value });
-}
+app.use(pinia);
+app.use(router);
 
-window.addEventListener("DOMContentLoaded", () => {
-  greetInputEl = document.querySelector("#greet-input");
-  greetMsgEl = document.querySelector("#greet-msg");
-  document.querySelector("#greet-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    greet();
-  });
+// Restore session dari Rust sebelum mount
+const auth = useAuthStore();
+auth.restoreSession().then((hasSession) => {
+  if (hasSession) {
+    router.replace("/dashboard");
+  } else {
+    router.replace("/login");
+  }
+  app.mount("#app");
 });

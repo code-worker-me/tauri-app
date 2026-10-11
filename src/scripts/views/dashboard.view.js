@@ -12,6 +12,11 @@ export function renderDashboardView(container) {
     userNameElement.textContent = user.username;
   }
 
+  const gotoProductsBtn = container.querySelector("#btn-goto-products");
+  gotoProductsBtn.addEventListener("click", () => {
+    router.navigate("products");
+  });
+
   const logoutBtn = container.querySelector("#btn-logout");
   logoutBtn.addEventListener("click", async () => {
     try {

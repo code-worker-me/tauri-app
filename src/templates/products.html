@@ -1,0 +1,58 @@
+<div class="products-page">
+    <div class="products-header">
+        <h2>Manajemen Stok</h2>
+        <button id="btn-show-form" class="btn btn-add">+ Tambah Produk</button>
+    </div>
+
+    <div id="product-error" class="error-message" style="display: none"></div>
+    <div id="product-success" class="success-message" style="display: none"></div>
+
+    <!-- Form tambah / edit -->
+    <div id="product-form-wrapper" style="display: none">
+        <div class="card form-card">
+            <h3 id="form-title">Tambah Produk</h3>
+            <form id="product-form">
+                <input type="hidden" id="product-id" />
+                <div class="form-group">
+                    <label for="product-name">Nama Produk</label>
+                    <input type="text" id="product-name" required />
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-price">Harga (Rp)</label>
+                        <input type="number" id="product-price" min="0" step="any" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="product-stock">Stok</label>
+                        <input type="number" id="product-stock" min="0" required />
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn" id="btn-save">Simpan</button>
+                    <button type="button" id="btn-cancel" class="btn btn-secondary">Batal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabel produk -->
+    <div class="card table-card">
+        <table id="product-table">
+            <thead>
+                <tr>
+                    <th>Nama Produk</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="product-tbody">
+                <tr>
+                    <td colspan="4" style="text-align:center; color:#999;">Memuat data...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button id="btn-back" class="btn btn-secondary btn-back">← Kembali ke Dashboard</button>
+</div>

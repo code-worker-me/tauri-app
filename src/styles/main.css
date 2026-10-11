@@ -10,12 +10,18 @@ body {
   color: #333;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
+  padding: 24px 16px;
 }
 
 #app {
   width: 100%;
+  max-width: 860px;
+}
+
+/* Layout halaman auth (login/register) tetap narrow */
+.card:not(.table-card):not(.form-card) {
   max-width: 420px;
-  padding: 16px;
+  margin: 60px auto 0;
 }
